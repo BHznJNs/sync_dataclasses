@@ -1,32 +1,24 @@
 import threading
 import time
-from atomic_dataclasses import ADataClass
+from sync_dataclasses import SyncDataClass
 
-class AtomicData(ADataClass):
+class _TestData(SyncDataClass):
     value1: int = 0
     value2: str = ""
+    value3: list[int] = []
 
-# --- 使用示例 ---
-auto_data = AtomicData()
+def _worker(data: _TestData):
+    for _ in range(100):
+        data.value1 += 1
+        data.value2 += str(1)
+        data.value3.append(1)
+        time.sleep(0.001)
 
-def worker(data_obj):
-    for i in range(3):
-        current_v1 = data_obj.value1
-        current_v2 = data_obj.value2
-        print(f"{threading.current_thread().name}: Read v1={current_v1}, v2='{current_v2}'")
-        time.sleep(0.01)
-        data_obj.value1 += 10
-        data_obj.value2 += str(i)
-        print(f"{threading.current_thread().name}: Wrote v1={data_obj.value1}, v2='{data_obj.value2}'")
-        time.sleep(0.02)
-
-threads = []
-for i in range(5):
-    t = threading.Thread(target=worker, args=(auto_data,), name=f"Worker-{i}")
-    threads.append(t)
-    t.start()
-
-for t in threads:
-    t.join()
-
-print(f"Final state: value1={auto_data.value1}, value2='{auto_data.value2}'")
+def test_main():
+    test_data = _TestData()
+    threads = [threading.Thread(target=_worker, args=[test_data]) for i in range(10)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    assert test_data.value1 == 1000
+    assert test_data.value2 == "1" * 1000
+    assert test_data.value3 == [1] * 1000
