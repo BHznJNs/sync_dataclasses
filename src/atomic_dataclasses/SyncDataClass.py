@@ -11,7 +11,7 @@ def _is_proxied_attr(name) -> bool:
             name.startswith("__") and name.endswith("__"))
 
 @dataclass
-class ADataClass:
+class SyncDataClass:
     """
     Atomic Data Class
     """

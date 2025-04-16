@@ -1,10 +1,10 @@
 [project]
-name = "atomic_dataclasses"
+name = "sync_dataclasses"
 version = "0.0.1"
 authors = [
   { name="BHznJNs", email="441768875@qq.com" },
 ]
-description = "A library for creating atomic data classes."
+description = "A library for creating thread safe data classes."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -14,10 +14,7 @@ classifiers = [
 ]
 license = "Apache-2.0"
 license-files = ["LICEN[CS]E*"]
-dependencies = [
-  "PySide6"
-]
 
 [project.urls]
-Homepage = "https://github.com/BHznJNs/atomic_dataclasses"
-Issues = "https://github.com/BHznJNs/atomic_dataclasses/issues"
+Homepage = "https://github.com/BHznJNs/sync_dataclasses"
+Issues = "https://github.com/BHznJNs/sync_dataclasses/issues"

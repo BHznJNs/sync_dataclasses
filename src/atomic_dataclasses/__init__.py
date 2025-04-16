@@ -1,1 +1,1 @@
-from .ADataClass import ADataClass
+from .SyncDataClass import SyncDataClass
